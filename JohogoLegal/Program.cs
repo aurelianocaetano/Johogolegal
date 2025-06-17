@@ -16,7 +16,7 @@ namespace JohogoLegal
         static bool jogando = true;
 
 
-        static void Main()
+        static void Temp()
         {
             // Aqui vai entrar o menu de vocês 
 

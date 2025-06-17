@@ -5,7 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <StartupObject>JohogoLegal.Program</StartupObject>
+	  <StartupObject>JohogoLegal.JoguinhoManeiro</StartupObject>
   </PropertyGroup>
 
 </Project>

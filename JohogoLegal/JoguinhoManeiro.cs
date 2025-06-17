@@ -11,15 +11,28 @@ namespace JohogoLegal
         string Configuracao = "";
         string Historico = "";
 
-        static void Temp    ()
+        static void Main ()
         {
             /// Apresentação
-            Console.WriteLine(" Seja Bem Vindo ao Batatinha!!");
-            
-            
+            Console.WriteLine("Seja Bem Vindo ao Batatinha!!");
+            Console.ReadKey();
+            Console.WriteLine("Insira seu primeiro nome:"); //inserção de nome
 
+            string nome = Console.ReadLine(); // Grava o nome digitado pelo usuário 
+            Console.Clear();
+            Console.WriteLine("Bem Vindo," + nome + "." + "Digite a opção de Menu desejada:"); // Imprime Nome digitado + solicitação pedindo opção de Menu
+
+
+
+
+
+
+
+
+            /*
             Console.WriteLine(" Insira seu primeiro nome:"); // inserção de nome
            
+
             string nome = Console.ReadLine(); // Grava o nome digitado pelo usuário 
             Console.WriteLine( "Bem Vindo," + nome +"." +  "Digite a opção de Menu desejada:"); // Imprime Nome digitado + solicitação pedindo opção de Menu
             
@@ -59,8 +72,8 @@ namespace JohogoLegal
             Console.WriteLine("Jogadas");
             Console.WriteLine("Pontuação");
             Console.WriteLine("Classificação");
+            Console.WriteLine("---------------------------------------"); */
 
-            Console.WriteLine("---------------------------------------");
 
 
 
