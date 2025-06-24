@@ -15,12 +15,48 @@ namespace JohogoLegal
         {
             /// Apresentação
             Console.WriteLine("Seja Bem Vindo ao Batatinha!!");
+            
+            Console.WriteLine("Aperte Enter");
+            Console.WriteLine("---------------------------------------");
             Console.ReadKey();
-            Console.WriteLine("Insira seu primeiro nome:"); //inserção de nome
+            Console.WriteLine(" Insira seu primeiro nome:"); //inserção de nome
+
+
+
+
+
 
             string nome = Console.ReadLine(); // Grava o nome digitado pelo usuário 
             Console.Clear();
             Console.WriteLine("Bem Vindo," + nome + "." + "Digite a opção de Menu desejada:"); // Imprime Nome digitado + solicitação pedindo opção de Menu
+
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Jogar");
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Configurações");
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Historico");
+
+           
+
+            string Jogar = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("Loading.......");
+            Console.WriteLine("---------------------------------------");
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

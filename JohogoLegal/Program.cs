@@ -1,45 +1,98 @@
 ﻿
 
 using System.ComponentModel;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
 
 namespace JohogoLegal
 { 
     class Program
     {
-
+        //Variaveis de desenho de tela
         static char[,] mapa;
         static int largura = 20;
         static int altura = 10;
         static int playerX = 1;
         static int playerY = 1;
+        
         static bool jogando = true;
 
+        private static object? escolhaUsuario;
+        private static bool jogarNovamente;
+
+        //Variáveis do Menu
+        string nome = "";
+        string Jogar = "";
+        string Configuracao = "";
+        string Historico = "";
 
         static void Temp()
         {
-            // Aqui vai entrar o menu de vocês 
+          
 
             Console.Clear();
+
+             // Aqui vai entrar o menu de vocês
+            /// Apresentação
+            Console.WriteLine("Seja Bem Vindo ao Batatinha!!");
+
+            Console.WriteLine("Aperte Enter");
+            Console.WriteLine("---------------------------------------");
+            Console.ReadKey();
+            Console.WriteLine(" Insira seu primeiro nome:"); //inserção de nome
+
+
+
+
+
+
+            string nome = Console.ReadLine(); // Grava o nome digitado pelo usuário 
+            Console.Clear();
+            Console.WriteLine("Bem Vindo," + nome + "." + "Digite a opção de Menu desejada:"); // Imprime Nome digitado + solicitação pedindo opção de Menu
+
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Jogar");
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Configurações");
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Historico");
+
+
+
+            string Jogar = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("Loading.......");
+            Console.WriteLine("---------------------------------------");
+
             jogar();
+
+
         }
 
         static void jogar()
 
         {
-            IniciarMapa();
+           // IniciarMapa(); // Chama a Função
 
             while (jogando)
             {
                 Console.Clear();
-                DesenharMapa();
-                var tecla = Console.ReadKey().Key;
+                DesenharMapa(); 
+                var tecla = Console.ReadKey().Key; // Lê uma tecla
                 AtualizarPosicao(tecla);
+
+
+                // Pergunta se quer jogar novamente
+
+                Console.Write("\nDeseja jogar novamente? (s/n): ");
+                string resposta = Console.ReadLine().ToLower();
+                jogarNovamente = (resposta == "s");
+
 
 
             }
         }
-        static void IniciarMapa()
+        /*static void IniciarMapa()
         {
             mapa = new char[largura, altura];
 
@@ -62,61 +115,79 @@ namespace JohogoLegal
             
             }
             mapa[playerX, playerY] = '@';
-        }
+        }*/ // Declaração da função
 
        
 
         static void DesenharMapa()
         {
-            for(int y = 0; y < altura; y++)
-            {
+            
 
-                for (int x = 0; x < largura; x++)
-                {
-                    Console.Write(mapa[x, y]);
-                }
-
-                Console.WriteLine();
-            }
 
 
         }
 
         static void AtualizarPosicao(ConsoleKey tecla)
+
+
         {
-            int tempX = playerX;
-            int tempY = playerY;
 
-            switch (tecla)
+
+
+            // Variáveis jogo das cores
+            string[] cores = { "vermelho", "azul", "verde" };
+            
+            if (Array.IndexOf(cores, escolhaUsuario) == -1)
+
             {
-                case ConsoleKey.A:
-                    tempX--;
-                    break;
-                case ConsoleKey.D:
-                    tempX++;
-                    break;
-                case ConsoleKey.W:
-                    tempY--;
-                    break;
-                case ConsoleKey.S:
-                    tempY++;
-                    break;
+
+                Console.WriteLine("Escolha inválida! Tente novamente.");
+
+
+            }
+            else
+            {
+                // Variaveis do Jogo das Cores
+                Random rand = new Random();
+                bool jogarNovamente = true;
+
+
+
+                // Sorteia uma cor
+
+                string corSorteada = cores[rand.Next(cores.Length)];
+
+                Console.WriteLine($"\nA cor sorteada foi: {corSorteada}");
+
+                // Verifica se acertou
+
+                if (escolhaUsuario == corSorteada)
+
+                {
+
+                    Console.WriteLine("Parabéns! Você acertou!");
+
+                }
+
+                else
+
+                {
+
+                    Console.WriteLine("Que pena! Você errou.");
+
+                }
 
             }
 
-            if (mapa[tempX, tempY] != '#')
-            {
-                mapa[playerX, playerY] = ' ';
-                mapa[tempX, tempY] = '@';
-                playerX = tempX;
-                playerY = tempY;
 
-            }
 
 
         }
 
+
     }
+
 }
+
 
 
