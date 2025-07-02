@@ -2,10 +2,13 @@
 
 using System.ComponentModel;
 using System.Reflection.Metadata.Ecma335;
+using System.Reflection.PortableExecutable;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace JohogoLegal
-{ 
+{
     class Program
     {
         //Variaveis de desenho de tela
@@ -14,28 +17,32 @@ namespace JohogoLegal
         static int altura = 10;
         static int playerX = 1;
         static int playerY = 1;
-        
-        static bool jogando = true;
 
-        public static string escolhaUsuario = "";
-        public static bool jogarNovamente;
+
+
+        public static bool jogando = true; // Variável de controle do jogo
+
+        public static  bool jogarNovamente; // Variável de controle para jogar novamente
+
+
 
         //Variáveis do Menu
-        static string nome = "";
+
         string Jogar = "";
         string Configuracao = "";
         string Historico = "";
 
-
-
+       // public static bool jogando { get; private set; }
 
         static void Main()
         {
-          
 
+
+            Personagem p = new Personagem();
+           
             Console.Clear();
 
-             // Aqui vai entrar o menu de vocês
+            // Aqui vai entrar o menu de vocês
             /// Apresentação
             Console.WriteLine("Seja Bem Vindo ao Batatatola!!");
 
@@ -44,9 +51,9 @@ namespace JohogoLegal
             Console.ReadKey();
             Console.WriteLine(" Insira seu primeiro nome:"); //inserção de nome
 
-            nome = Console.ReadLine(); // Grava o nome digitado pelo usuário 
+           p.nome = Console.ReadLine(); // Grava o nome digitado pelo usuário 
             Console.Clear();
-            Console.WriteLine("Bem Vindo," + nome + "." + "Digite a opção de Menu desejada:"); // Imprime Nome digitado + solicitação pedindo opção de Menu
+            Console.WriteLine("Bem Vindo," + p.nome + "." + "Digite a opção de Menu desejada:"); // Imprime Nome digitado + solicitação pedindo opção de Menu
 
             Console.WriteLine("---------------------------------------");
             Console.WriteLine("Jogar");
@@ -72,22 +79,25 @@ namespace JohogoLegal
         }
 
 
-        static void jogar()
+       static void jogar()
 
         {
-           // IniciarMapa(); // Chama a Função
-
+            // IniciarMapa(); // Chama a Função
+            
+            Personagem p = new Personagem();
+        
             while (jogando)
             {
+
                 Console.Clear();
                 DesenharMapa();
-                escolhaUsuario = Console.ReadLine().ToLower();
+                p.escolhaUsuario = Console.ReadLine().ToLower();
                 AtualizarPosicao();
 
                 // Pergunta se quer jogar novamente
                 Console.Write("\nDeseja jogar novamente? (s/n): ");
                 Console.WriteLine("Digite sua ecolha:");
-                
+
                 string resposta = Console.ReadLine().ToLower();
                 jogarNovamente = (resposta == "s");
 
@@ -95,12 +105,12 @@ namespace JohogoLegal
 
 
 
-               
+
 
 
             }
         }
-        /*static void IniciarMapa()
+       /* static void IniciarMapa()
         {
             mapa = new char[largura, altura];
 
@@ -125,7 +135,7 @@ namespace JohogoLegal
             mapa[playerX, playerY] = '@';
         }*/ // Declaração da função
 
-       
+
 
         static void DesenharMapa()
         {
@@ -139,32 +149,31 @@ namespace JohogoLegal
 
         {
 
-            
 
 
-            // Variáveis jogo das cores
-            string[] cores = { "vermelho", "azul", "verde" };
+            Personagem p = new Personagem();
 
 
 
             // Sorteia uma cor
 
-            if (Array.IndexOf(cores, escolhaUsuario) == -1)
+            if (Array.IndexOf(p.cores, p.escolhaUsuario) == -1)
 
             {
 
                 Console.WriteLine("Escolha inválida!Tente novamente.");
-                
+
 
             }
             else
             {
 
-                // Variaveis do Jogo das Cores
-                Random rand = new Random();
+               
+
+
                 //bool jogarNovamente = true;
 
-                string corSorteada = cores[rand.Next(cores.Length)];
+                string corSorteada = p.cores[p.rand.Next(p.cores.Length)];
 
                 Console.WriteLine($"\nA cor sorteada foi: {corSorteada}");
 
@@ -172,11 +181,10 @@ namespace JohogoLegal
 
                 // Verifica se acertou
 
-                if (escolhaUsuario == corSorteada)
-
+                if (p.escolhaUsuario == corSorteada)
+                    
                 {
-
-                    Console.WriteLine("Parabéns" + nome + "." + "Você acertou!");
+                    Console.WriteLine("Parabéns" + p.nome + "." + "Você acertou!");
 
                 }
 
@@ -184,11 +192,17 @@ namespace JohogoLegal
 
                 {
 
-                    Console.WriteLine("Que pena!" + nome + "," + "Voçê errou:");
+                    Console.WriteLine("Que pena!" + p.nome + "," + "Voçê errou:");
 
                 }
 
 
+              
+    
+    
+    
+    
+    
 
             }
 
