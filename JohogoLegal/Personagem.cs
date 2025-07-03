@@ -11,23 +11,23 @@ namespace JohogoLegal
 
     class Personagem
     {
-
+         //List<string> caixa = new List<string>(); // Lista de cores do jogo
 
         List<ConsoleColor> caixa = new List<ConsoleColor>();// Lista de cores do jogo  
+       
 
-
-        update()
+        public Personagem()
         {
-
-
-
+            // Variáveis de randomização de Cores, usando lista.
             caixa.Add(ConsoleColor.Red);
             caixa.Add(ConsoleColor.Blue);
             caixa.Add(ConsoleColor.Green);
-            
         }
 
-        
+
+
+
+
         public string[] cores = { "vermelho", "azul", "verde" };  // Variáveis jogo das cores
 
         // Variável de randomização
@@ -39,11 +39,7 @@ namespace JohogoLegal
 
 
 
-        public Personagem() 
-        {
-            
-
-        }
+       
     }
 }
 
