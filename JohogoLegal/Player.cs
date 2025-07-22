@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JohogoLegal
 {
-    internal class Player
+    internal class Player : MonoBehaviour
     {
 
         Vector2 pos = new Vector2(1, 1);
@@ -36,16 +37,15 @@ namespace JohogoLegal
                     y = pos.Down;
                     break;
 
-                    if (Mapa.Instancia.mapa[x, y] == '#')
+                   if (Mapa.Instancia.mapa[x, y] == '#')
                     {
                         pos.x = oldX;
                         pos.y = oldY;
                     }
-           
 
-
+                  
             }
         }
-    }
+}
     
 }

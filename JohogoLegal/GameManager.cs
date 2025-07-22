@@ -19,10 +19,8 @@ namespace JohogoLegal
 
         private bool jogando = true;
         private bool jogarNovamente = false;
-        private int largura = 40;
         private int altura = 15;
         private char[,] mapa;
-
 
         public void StartGame()
         {
