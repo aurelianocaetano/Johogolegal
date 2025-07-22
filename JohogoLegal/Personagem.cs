@@ -7,40 +7,57 @@ using System.Threading.Tasks;
 
 namespace JohogoLegal
 {
-
-
     class Personagem
     {
-         //List<string> caixa = new List<string>(); // Lista de cores do jogo
-
-        List<ConsoleColor> caixa = new List<ConsoleColor>();// Lista de cores do jogo  
-       
+        public List<string> cores = new List<string> { "vermelho", "azul", "verde" };
+        public List<ConsoleColor> caixa = new List<ConsoleColor>();
+        public string nome = "";
+        public string escolhaUsuario = "";
+        public Random rand = new Random();
 
         public Personagem()
         {
-            // Variáveis de randomização de Cores, usando lista.
+            PreencherCores();
+        }
+
+        private void PreencherCores()
+        {
             caixa.Add(ConsoleColor.Red);
             caixa.Add(ConsoleColor.Blue);
             caixa.Add(ConsoleColor.Green);
         }
 
+        public string SortearCor()
+        {
+            return cores[rand.Next(cores.Count)];
+        }
 
+        // Função nova: sorteia e retorna nome + cor visual
+        public (string nome, ConsoleColor visual) SortearCorComVisual()
+        {
+            int index = rand.Next(cores.Count);
+            return (cores[index], caixa[index]);
+        }
 
+        public bool EscolhaValida()
+        {
+            return cores.Contains(escolhaUsuario);
+        }
 
+        public bool Acertou(string corSorteada)
+        {
+            return escolhaUsuario == corSorteada;
+        }
 
-        public string[] cores = { "vermelho", "azul", "verde" };  // Variáveis jogo das cores
-
-        // Variável de randomização
-        public Random rand = new Random(); 
-        
-        public string escolhaUsuario = ""; // Variável de escolha do usuário
-       
-        public string nome = ""; // Variável de nome do usuário
-
-
-
-       
+        public ConsoleColor ObterCorVisual(string corNome)
+        {
+            int index = cores.IndexOf(corNome);
+            if (index >= 0 && index < caixa.Count)
+                return caixa[index];
+            return ConsoleColor.White;
+        }
     }
+
 }
 
 
