@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JohogoLegal
 {
-    internal class GameManager
+    internal class GameManager:MonoBehaviour
     {
 
       private GameManager() {}
