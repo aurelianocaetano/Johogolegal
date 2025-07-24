@@ -12,6 +12,7 @@ namespace JohogoLegal
 
     public class Program
     {
+
         static void Main()
         {
             GameManager.Instance.StartGame();

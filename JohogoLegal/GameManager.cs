@@ -20,8 +20,13 @@ namespace JohogoLegal
         private bool jogando = true;
         private bool jogarNovamente = false;
         private int altura = 15;
+        private int largura = 40;
         private char[,] mapa;
 
+
+
+       
+       
         public void StartGame()
         {
             // Vector2 pos = new Vector2(1 ,1);
@@ -63,6 +68,8 @@ namespace JohogoLegal
         {
             while (jogando)
             {
+                
+
                 Console.Clear();
                 IniciarMapa();
                 MostrarTextoNaTela(1, 1, "Escolha uma cor: vermelho, azul, verde");

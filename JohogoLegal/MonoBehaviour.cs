@@ -54,7 +54,7 @@ namespace JohogoLegal
             t.Join(); // Aguarda a thread terminar
         }
 
-        public virtual void Awake() { }
+        public virtual void Awake() {}
         public virtual void Start() { }
         public virtual void UpDate() { }
         public virtual void LateUpdate(){ }

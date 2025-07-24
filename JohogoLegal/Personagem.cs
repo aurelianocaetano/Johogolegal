@@ -14,6 +14,9 @@ namespace JohogoLegal
         public string nome = "";
         public string escolhaUsuario = "";
         public Random rand = new Random();
+       
+        
+        
 
         public Personagem()
         {
