@@ -9,67 +9,56 @@ using System.Runtime.Serialization;
 
 namespace JohogoLegal
 {
-     public class MonoBehaviour
+    public abstract class MonoBehaviour
     {
+        private Thread t;            // Thread que mantém o ciclo de vida
+        private bool ativo = true;  // Controla se o loop deve continuar
+        public bool input = false;
 
-         private Thread t;
 
-         private bool ativo = true;
+        // public bool visible = false;  // Marcius
+        // public bool input = false; // Marcius
 
-
+        // Inicia o ciclo de vida do objeto
         public void Run()
         {
-            Awake();
-            Start();
+            Awake(); // Antes da thread começar
+            Start(); // Inicialização do objeto
 
-            t = new Thread(
-                () =>
+            t = new Thread(() =>
+            {
+                while (ativo)
                 {
+                    UpDate();       // Atualização principal
+                    LateUpdate();   // Atualização complementar
+                    Thread.Sleep(800); // Intervalo de "frame"
+                }
 
-                    while (ativo)
-                    {
-
-
-                        UpDate();
-                        LateUpdate();
-                        Thread.Sleep(800); // Simula o tempo de atualização
-
-                    }
-
-                    OnDestroy();
-                }      
-            );
+                OnDestroy(); // Finalização
+            });
 
             t.Start();
         }
-            
-       
-         
-           
-          
-            
-            public void Stop()
+
+        // Encerra o ciclo
+        public void Stop()
         {
             this.ativo = false;
-            t.Join(); // Aguarda a thread terminar
+            t.Join(); // Aguarda a thread encerrar
         }
 
-        public virtual void Awake() {}
-        public virtual void Start() { }
-        public virtual void UpDate() { }
-        public virtual void LateUpdate(){ }
-        public virtual void OnDestroy() { }
+        // Métodos virtuais que podem ser sobrescritos nas subclasses
 
+        public virtual void Awake() { }         // Chamado antes do Start
+        public virtual void Start() { }         // Inicialização
+        public virtual void Update() { }        // Chamado em cada ciclo
+        public virtual void LateUpdate() { }    // Após o Update
+        public virtual void OnDestroy() { }     // Encerramento do ciclo
 
-
-
-
-
-
-
-
-
+        public abstract void Draw();  // Marcius  mandou colocar
 
 
     }
+
+
 }
