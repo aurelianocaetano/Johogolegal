@@ -5,75 +5,55 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace JohogoLegal
 {
-    class Personagem:MonoBehaviour
+    public class Personagem : MonoBehaviour // Classe Personagem que herda de MonoBehaviour
     {
-        // Lista com os nomes das cores
-        public List<string> cores = new List<string> { "vermelho", "azul", "verde" };
+        private readonly Cores coresDisponiveis; //     Instância da classe Cores para gerenciar as cores disponíveis
+        private readonly Random rand; // Instância da classe Random para sortear cores
 
-        // Lista com as cores visuais equivalentes
-        public List<ConsoleColor> caixa = new List<ConsoleColor>();
+        public string Nome { get; set; }  //    Propriedade para armazenar o nome do personagem
+        public string EscolhaUsuario { get; set; }  //   Propriedade para armazenar a escolha do usuário
 
-        // Nome do jogador
-        public string nome = "";
-
-        // Cor escolhida pelo jogador
-        public string escolhaUsuario = "";
-
-        // Gerador de números aleatórios
-        public Random rand = new Random();
-
-        // Construtor do personagem (inicia as cores visuais)
-        public Personagem()
+        public Personagem() //  Construtor da Classe Personagem
         {
-            PreencherCores();
+            coresDisponiveis = new Cores();  // Instancia a classe Cores para obter as cores disponíveis
+            rand = new Random();  //    Instancia a classe Random para sortear cores
+            Nome = "";  //  Inicializa o nome do personagem como uma string vazia
+            EscolhaUsuario = ""; //     Inicializa a escolha do usuário como uma string vazia
         }
 
-        // Preenche a lista "caixa" com as cores correspondentes da lista "cores"
-        private void PreencherCores()
+        public List<string> ObterCoresDisponiveis()  //     Método para obter as cores disponíveis
         {
-            caixa.Add(ConsoleColor.Red);
-            caixa.Add(ConsoleColor.Blue);
-            caixa.Add(ConsoleColor.Green);
+            return coresDisponiveis.ObterNomesCores(); // Retorna a lista de nomes de cores disponíveis da classe Cores     
         }
 
-        // Retorna uma cor aleatória da lista
-        public string SortearCor()
+        public string SortearCor() //     Método para sortear uma cor aleatória
         {
-            return cores[rand.Next(cores.Count)];
+            var cores = ObterCoresDisponiveis(); // Obtém a lista de cores disponíveis
+            return cores[rand.Next(cores.Count)]; // Retorna uma cor aleatória da lista usando o gerador de números aleatórios
         }
 
-        // Verifica se a escolha do usuário está dentro das opções válidas
-        public bool EscolhaValida()
+        public bool EscolhaValida()  //    Método para verificar se a escolha do usuário é válida
         {
-            return cores.Contains(escolhaUsuario);
+            return coresDisponiveis.CorExiste(EscolhaUsuario); // Verifica se a cor escolhida pelo usuário existe na lista de cores disponíveis
         }
 
-        // Verifica se o usuário acertou a cor sorteada
-        public bool Acertou(string corSorteada)
+        public bool Acertou(string corSorteada) //    Método para verificar se o usuário acertou a cor sorteada
         {
-            return escolhaUsuario == corSorteada;
+            return string.Equals(EscolhaUsuario, corSorteada, StringComparison.OrdinalIgnoreCase); // Compara a escolha do usuário com a cor sorteada, ignorando diferenças de maiúsculas e minúsculas
         }
 
-        // Retorna a cor visual (ConsoleColor) correspondente ao nome da cor
-        public ConsoleColor ObterCorVisual(string corNome)
+        public ConsoleColor ObterCorVisual(string corNome) // Método para obter a cor visual correspondente ao nome da cor
         {
-            int index = cores.IndexOf(corNome);
-            if (index >= 0 && index < caixa.Count)
-                return caixa[index];
-            return ConsoleColor.White; // Se não encontrada, cor padrão
+            return coresDisponiveis.ObterCorVisual(corNome); // Retorna a cor visual correspondente ao nome da cor usando a classe Cores
         }
 
-        public override void Draw()
+        public override void Draw() // Método Draw que é chamado para desenhar o personagem
         {
-            if (mapa != null && mapa.visible) mapa.Draw();
-            if (pl != null && pl.visible) pl.Draw();
-            if (nemo != null && nemo.visible) nemo.Draw();
+            
         }
     }
-
-
 }
-/// Minhas cores tem que virar uma Classe
-

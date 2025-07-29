@@ -1,68 +1,97 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace JohogoLegal
 {
-    internal class Mapa : MonoBehaviour
+    public class Mapa : MonoBehaviour
     {
-        // Singleton - garante uma única instância
-        private static Mapa instancia;
+        private static readonly Lazy<Mapa> instancia = new Lazy<Mapa>(() => new Mapa()); // Instância única do mapa usando Lazy para garantir que seja criado apenas quando necessário
 
-        private Mapa() { Run(); }
+        private readonly int largura;
+        private readonly int altura; // Atributos para armazenar a largura e altura do mapa
+        private char[,] mapaAtual; // Matriz 2D para armazenar o mapa atual
 
-        public static Mapa Instancia => instancia ??= new Mapa(); // Cria uma nova instância se não existir Padrão Singleton
+        public static Mapa Instancia => instancia.Value;  // Propriedade estática para acessar a instância única do mapa
+        public bool visible { get; set; } = true; // Propriedade para controlar a visibilidade do mapa
+        public bool Visible { get; set; } // Propriedade para controlar a visibilidade do mapa, usada no método Update
 
-        public bool visible { get; internal set; } // permite controlar a visibilidade do mapa 
-
-        private int largura = 40;
-        private int altura = 15;
-
-        // Representa o mapa
-        public char[,] mapa;
-
-        public override void Update()
+        public char[,] GetMapa()  // Método para obter o mapa atual
         {
-            Draw(); // Chama o método Draw para atualizar a visualização do mapa
+            return mapaAtual;   // Retorna o mapa atual
         }
 
-        // Desenha o mapa com bordas '#' e espaço interno vazio
-        public override void Draw()
+        private Mapa() // Construtor privado para garantir que a classe seja um Singleton
         {
-            mapa = new char[largura, altura]; // Inicializa a matriz do mapa com as dimensões especificadas
+            largura = 60;  // Aumentei a largura para ter mais espaço
+            altura = 20;  // Aumentei a altura para ter mais espaço
+            mapaAtual = new char[largura, altura]; // Cria uma matriz 2D para armazenar o mapa atual
+            InicializarMapa(); // Chama o método para inicializar o mapa
+        }
 
-            for (int y = 0; y < altura; y++) // Verifica se y é menor que altura
+        private void InicializarMapa() // Método para inicializar o mapa
+        {
+            // Preenche todo o mapa com #
+            for (int y = 0; y < altura; y++) // percorre as linhas do mapa
             {
-                for (int x = 0; x < largura; x++) // Verifica se x é menor que largura
+                for (int x = 0; x < largura; x++) // percorre as colunas do mapa
                 {
-                    // Borda com '#', interior com espaço
-                    if (y == 0 || y == altura - 1 || x == 0 || x == largura - 1) // Verifica se y é 0 ou altura-1 ou se x é 0 ou largura-1
-                        mapa[x, y] = '#'; // Borda do mapa
-                    else
-                        mapa[x, y] = ' '; // Espaço vazio dentro do mapa
+                    mapaAtual[x, y] = '#'; // Preenche o mapa com paredes representadas por '#'
                 }
             }
 
-            Console.Clear();
+            // Cria uma área jogável no centro (limpa o centro)
 
-            // Imprime  na tela
-            for (int y = 0; y < altura; y++) // Verifica se y é menor que altura
+            // Definindo margens para a área jogável
+            int margemX = 2;  // Margem de 2 caracteres em cada lado
+            int margemY = 2;  // Margem de 2 caracteres em cima e embaixo
+
+            for (int y = margemY; y < altura - margemY; y++) // percorre as linhas do mapa
             {
-                for (int x = 0; x < largura; x++) // Verifica se x é menor que largura
+                for (int x = margemX; x < largura - margemX; x++) // percorre as colunas do mapa
                 {
-                    Console.Write(mapa[x, y]); // Imprime o caractere do mapa na posição (x, y)
+                    mapaAtual[x, y] = ' '; // Preenche o espaço vazio dentro da área jogável
                 }
-                Console.WriteLine(); // Pula para a próxima linha após imprimir uma linha completa do mapa
             }
         }
 
-        // Atualiza o mapa a cada ciclo de execução da thread (se necessário)
-        
+        public override void Update() // Método Update que é chamado para atualizar o mapa
+        {
+            if (Visible) // Verifica se o mapa está visível antes de atualizar
+            {
+                Draw();  // Chama o método Draw para desenhar o mapa atualizado
+            }
+        }
 
-        
+        public override void Draw() // Método Draw que é chamado para desenhar o mapa
+        {
+            if (!Visible) return; // Verifica se o mapa está visível antes de desenhar
 
+            Console.Clear(); // Limpa o console antes de desenhar o mapa
+            Console.ForegroundColor = ConsoleColor.White; // Define a cor do texto como branco
+
+            // Desenha o mapa com bordas mais visíveis
+            for (int y = 0; y < altura; y++) // percorre cada linha do mapa
+            {
+                for (int x = 0; x < largura; x++) // percorre cada coluna do mapa
+                {
+                    if (mapaAtual[x, y] == '#') // se o caractere for uma parede
+                    {
+                        Console.Write('#'); // desenha a parede
+                    }
+                    else  // se for um espaço vazio
+                    {
+                        Console.Write(mapaAtual[x, y]); // desenha o espaço vazio
+                    }
+                }
+                Console.WriteLine(); // pula para a próxima linha após desenhar uma linha completa do mapa
+            }
+        }
     }
 }

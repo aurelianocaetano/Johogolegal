@@ -7,58 +7,100 @@ using System.Threading;
 using System.Data;
 using System.Runtime.Serialization;
 
+
+
 namespace JohogoLegal
 {
     public abstract class MonoBehaviour
     {
-        private Thread t;            // Thread que mantém o ciclo de vida
-        private bool ativo = true;  // Controla se o loop deve continuar
+        private Thread t;
+        private bool ativo = true;
         public bool input = false;
+        protected Mapa mapa;
+        protected Player pl;
+        protected Menu nemo;
 
+        // Adicionando informações de sistema
+        protected readonly string currentUser;
+        protected readonly DateTime startTime;
 
-        // public bool visible = false;  // Marcius
-        // public bool input = false; // Marcius
+        public MonoBehaviour()
+        {
+            // Inicializa as informações do sistema
+            currentUser = "aurelianocaetano"; // Você pode tornar isso dinâmico se necessário
+            startTime = DateTime.UtcNow;
+        }
 
-        // Inicia o ciclo de vida do objeto
+        public virtual void Initialize()
+        {
+            mapa = Mapa.Instancia;
+            pl = new Player();
+            nemo = new Menu();
+            LogInitialization();
+        }
+
+        private void LogInitialization()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine($"Initialized at: {startTime:yyyy-MM-dd HH:mm:ss} UTC");
+            Console.WriteLine($"User: {currentUser}");
+            Console.ResetColor();
+            Thread.Sleep(1000); // Mostra a informação por 1 segundo
+        }
+
         public void Run()
         {
-            Awake(); // Antes da thread começar
-            Start(); // Inicialização do objeto
+            
+            Awake();
+            Start();
 
             t = new Thread(() =>
             {
                 while (ativo)
                 {
-                    UpDate();       // Atualização principal
-                    LateUpdate();   // Atualização complementar
-                    Thread.Sleep(800); // Intervalo de "frame"
+                    Update();
+                    LateUpdate();
+                    Thread.Sleep(800);
                 }
-
-                OnDestroy(); // Finalização
+                OnDestroy();
             });
 
             t.Start();
         }
 
-        // Encerra o ciclo
         public void Stop()
         {
             this.ativo = false;
-            t.Join(); // Aguarda a thread encerrar
+            t?.Join();
         }
 
-        // Métodos virtuais que podem ser sobrescritos nas subclasses
+        // Métodos para obter informações do sistema
+        protected string GetCurrentDateTime()
+        {
+            return DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
+        }
 
-        public virtual void Awake() { }         // Chamado antes do Start
-        public virtual void Start() { }         // Inicialização
-        public virtual void Update() { }        // Chamado em cada ciclo
-        public virtual void LateUpdate() { }    // Após o Update
-        public virtual void OnDestroy() { }     // Encerramento do ciclo
+        protected string GetCurrentUser()
+        {
+            return currentUser;
+        }
 
-        public abstract void Draw();  // Marcius  mandou colocar
+        protected TimeSpan GetUptime()
+        {
+            return DateTime.UtcNow - startTime;
+        }
 
+        public virtual void Awake() { }
+        public virtual void Start() { }
+        public virtual void Update() { }
+        public virtual void LateUpdate() { }
 
+        public virtual void OnDestroy()
+        {
+            Console.WriteLine($"Session ended at: {GetCurrentDateTime()}");
+            Console.WriteLine($"Total uptime: {GetUptime().ToString(@"hh\:mm\:ss")}");
+        }
+
+        public abstract void Draw();
     }
-
-
 }

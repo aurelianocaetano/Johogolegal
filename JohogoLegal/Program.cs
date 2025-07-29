@@ -7,27 +7,29 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 
+
+
+
+
 namespace JohogoLegal
 {
-
-    public class Program: MonoBehaviour
+    public class Program
     {
-
-        static void Main()
+        public static void Main()
         {
-            GameManager.Instance.StartGame();
-      
-        
-        }
+            Console.Title = "Batatatola";
+            Console.CursorVisible = false;
 
-        public override void Draw()
-        {
-            if (mapa != null && mapa.visible) mapa.Draw();
-            if (pl != null && pl.visible) pl.Draw();
-            if (nemo != null && nemo.visible) nemo.Draw();
+            // Exibe informações do sistema ao iniciar
+            /*SystemInfo.LogSystemInfo();
+            SystemInfo.LogSessionStart();
+            
+            Console.WriteLine("\nPressione qualquer tecla para começar...");
+            Console.ReadKey(true);*/
+            Console.Clear();
+
+            GameManager gm =  GameManager.Instance; // Obtém a instância do GameManager
+
         }
     }
-
-
-
 }

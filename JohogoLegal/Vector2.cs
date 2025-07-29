@@ -4,37 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace JohogoLegal
 {
-    public class Vector2: MonoBehaviour
+    public class Vector2
     {
-        public int x;
-        public int y;
+        public int x { get; set; }
+        public int y { get; set; }
 
-        // Construtor que define posição inicial
         public Vector2(int x, int y)
         {
             this.x = x;
             this.y = y;
         }
 
-        // Propriedades que alteram a posição — cuidado: modificam diretamente
-        public int Up => this.y - 1;       // Move para cima (y - 1)
-        public int Down => this.y + 1;     // Move para baixo (y + 1)
-        public int Left => this.x - 1;     // Move para esquerda (x - 1)
-        public int Right => this.x + 1;    // Move para direita (x + 1)
+        public Vector2 Up() => new Vector2(x, y - 1);
+        public Vector2 Down() => new Vector2(x, y + 1);
+        public Vector2 Left() => new Vector2(x - 1, y);
+        public Vector2 Right() => new Vector2(x + 1, y);
 
-        // Calcula a distância entre dois pontos (usado para lógica espacial se necessário)
         public static int Distance(Vector2 a, Vector2 b)
         {
             if (a == null || b == null) return -1;
+            return (int)Math.Sqrt(Math.Pow(a.x - b.x, 2) + Math.Pow(a.y - b.y, 2));
+        }
 
-            return (int)Math.Sqrt(
-                (a.x - b.x) * (a.x - b.x) +
-                (a.y - b.y) * (a.y - b.y)
-            );
+        public override bool Equals(object obj)
+        {
+            if (obj is Vector2 other)
+            {
+                return x == other.x && y == other.y;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(x, y);
         }
     }
-
-
 }
