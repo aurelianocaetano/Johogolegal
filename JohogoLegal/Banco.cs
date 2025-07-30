@@ -15,7 +15,7 @@ namespace JohogoLegal
         private const int VALOR_GANHO = 20; // Valor ganho ao vencer
         private const int VALOR_PERDIDO = 10;   // Valor perdido ao perder  
         private const int SALDO_INICIAL = 100; // Saldo inicial do banco
-
+       
         public Banco() // Construtor da classe Banco
         {
             saldo = SALDO_INICIAL; // Inicializa o saldo com o valor definido
@@ -41,6 +41,7 @@ namespace JohogoLegal
 
         public void ExibirSaldo() //    Método para exibir o saldo na tela
         {
+
             // Ajusta a posição para ficar dentro da área jogável do mapa
             int margemX = 3; // Um pouco mais de margem para não encostar na borda
             int margemY = 3; // Um pouco mais de margem para não encostar na borda
@@ -48,6 +49,7 @@ namespace JohogoLegal
             Console.ForegroundColor = ConsoleColor.Yellow; // Define a cor do texto
             Console.Write($"Saldo atual: {ObterSaldo()}"); // Exibe o saldo atual
             Console.ResetColor(); // Reseta a cor do texto
+
         }
 
         public void ProcessarResultado(bool ganhou) // Método para processar o resultado do jogo

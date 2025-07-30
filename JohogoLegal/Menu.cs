@@ -10,6 +10,8 @@ namespace JohogoLegal
 {
     public class Menu : MonoBehaviour  // Classe Menu que herda de MonoBehaviour
     {
+      
+
         public bool visible { get; internal set; } // Propriedade para controlar a visibilidade do menu
         private Personagem personagem; // Instância do personagem
         private Banco banco; // Instância do banco
@@ -39,6 +41,7 @@ namespace JohogoLegal
             Mapa.Instancia.Draw(); // Desenha o mapa primeiro
             MostrarTextoNaTela(1, 1, "Seja Bem-Vindo ao Batatatola!!");
             MostrarTextoNaTela(1, 2, "Aperte Enter para começar...");
+            MostrarTextoNaTela(1, 4, "Proibido para menores de 18 Anos...");
             Console.ReadKey();
         }
 
@@ -67,7 +70,9 @@ namespace JohogoLegal
                 {
                     string prefixo = (i == indiceSelecionado) ? ">" : " "; // Define o prefixo para a opção selecionada
                     MostrarTextoNaTela(5, 3 + i, $"{prefixo} {opcoes[i]}"); // Exibe a opção do menu na tela, com o prefixo de seleção
+                    
                 }
+
 
                 tecla = Console.ReadKey(true).Key; // Lê a tecla pressionada sem exibir no console
 
@@ -92,7 +97,8 @@ namespace JohogoLegal
                     MostrarTelaDoBanco(); // Exibe a tela do banco
                     break;
                 default:    // Opção "Histórico" ou qualquer outra opção não implementada
-                    MostrarTextoNaTela(2, 10, "Precione Enter para voltar ao Menu");
+                    MostrarTextoNaTela(2, 10, "Não há registro positivo para esta atividade!");
+                    MostrarTextoNaTela(2, 12, "Tecle Enter para voltar ao Menu");
                     Console.ReadKey();
                     break;
             }
@@ -103,7 +109,8 @@ namespace JohogoLegal
             Console.Clear();
             Mapa.Instancia.Draw(); // Desenha o mapa primeiro
             banco.ExibirSaldo();
-            MostrarTextoNaTela(2, 5, "Precione Enter para voltar ao Menu");
+            MostrarTextoNaTela(2, 3, $"Invista seu dinheiro {personagem.Nome}");
+            MostrarTextoNaTela(2, 5, "Tecle Enter para voltar ao Menu");
             Console.ReadKey();
             MostrarMenuPrincipal();
         }
@@ -120,7 +127,7 @@ namespace JohogoLegal
                 AtualizarPosicao();
 
                 MostrarTextoNaTela(1, 11, "Escolha (s/Sim/ n/Não) e confirme enter:");
-                Console.SetCursorPosition(35, 13); // Ajustado para ficar logo após os dois pontos
+                Console.SetCursorPosition(44, 14); // Ajustado para ficar logo após os dois pontos
                 string resposta = Console.ReadLine().ToLower();
                 jogarNovamente = (resposta == "s");
                 if (!jogarNovamente)
@@ -165,16 +172,20 @@ namespace JohogoLegal
 
             if (acertou)
             {
+                MostrarTextoNaTela(14, 1, $"Jogue com responsabilidade");
+
                 MostrarTextoNaTela(1, 5, $"Parabéns,{personagem.Nome}, você acertou!"); // Mensagem de sucesso
                 MostrarTextoNaTela(1, 9, $"Aperte qualquer tecla para Continuar");      // Mensagem de continuação
             }
             else
             {
-                MostrarTextoNaTela(1, 5, $"Que pena, {personagem.Nome},você errou!");  // Mensagem de erro
+                MostrarTextoNaTela(1, 3, $"Cassino não é Renda");
+                MostrarTextoNaTela(1, 5, $"Que pena {personagem.Nome},você errou!");  // Mensagem de erro
                 MostrarTextoNaTela(1, 9, $"Aperte Enter continuar");    // Mensagem de continuação
 
             }
 
+           
             MostrarTextoNaTela(1, 7, $"Saldo atual:{banco.ObterSaldo()}"); // Exibe o saldo atual
             Console.ReadKey();
         }
@@ -193,7 +204,7 @@ namespace JohogoLegal
 
                 for (int i = 0; i < opcoes.Count; i++) // Loop para exibir as opções de cores
                 {
-                    int x = 5 + i * 6; // Posição horizontal para cada opção
+                    int x = 5 + i * 10; // Posição horizontal para cada opção
                     int y = 5; // Posição vertical fixa para todas as opções
 
                     Console.SetCursorPosition(x, y); // Define a posição do cursor

@@ -8,15 +8,30 @@ namespace JohogoLegal
     {
         private readonly Dictionary<string, ConsoleColor> mappedColors;
 
+
+        
         public Cores()
         {
             mappedColors = new Dictionary<string, ConsoleColor>
             {
-                { "vermelho", ConsoleColor.Red},
+
                 { "azul", ConsoleColor.Blue},
-                { "verde", ConsoleColor.Green}
+                { "verde", ConsoleColor.Green},
+                { "vermelho", ConsoleColor.Red},
+              // {"laranja", ConsoleColor.DarkYellow},
+
             };
         }
+
+
+
+
+
+
+
+
+
+
 
         public List<string> ObterNomesCores() => mappedColors.Keys.ToList(); // Método para obter os nomes das cores disponíveis
 
@@ -24,7 +39,9 @@ namespace JohogoLegal
         {
             return mappedColors.TryGetValue(corNome.ToLower(), out ConsoleColor cor) // Tenta obter a cor correspondente ao nome fornecido
                 ? cor // Se a cor existir, retorna a cor correspondente
+
                 : ConsoleColor.White; // Se a cor não existir, retorna branco como padrão
+
         }
 
         public bool CorExiste(string corNome) // Método para verificar se uma cor existe na lista de cores disponíveis

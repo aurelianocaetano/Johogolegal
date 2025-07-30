@@ -40,10 +40,10 @@ namespace JohogoLegal
 
         public override void Start()
         {
-            Console.Clear();
-           // Mapa.Instancia.Visible = true;
-            
-           // player.visible = true;
+            Console.Clear(); // Limpa o console ao iniciar o jogo
+                             // Mapa.Instancia.Visible = true;
+
+            // player.visible = true;
 
             menu = new Menu();
             menu.visible = true;
@@ -54,15 +54,9 @@ namespace JohogoLegal
             return DateTime.UtcNow - gameStartTime;
         }*/
 
-        public override void Update()
-        {
-            
-            Draw(); 
-        }
-
         public override void Draw()
         {
-           if( menu != null && menu.visible) menu.Draw();
+        
         }
     }
 }
